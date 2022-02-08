@@ -1,8 +1,8 @@
 
 import './App.css';
 import { useState, useEffect } from 'react';
-import Registration from './user-compents/Registration';
-import Login from './user-compents/Login';
+import Registration from './user-components/Registration';
+import Login from './user-components/Login';
 
 function App() {
   return (
