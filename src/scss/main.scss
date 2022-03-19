@@ -1,0 +1,30 @@
+@import "navbar";
+@import "sidebar";
+
+
+body {
+    background-color: #112A4f;
+    padding: 0;
+}
+
+
+.app {
+	margin: 0;
+    display: flex;
+    flex-flow: column;
+} 
+
+main {
+    margin: 40px auto;
+    width: 100%;
+    @media (max-width: 720px) {
+        max-width: 100%; 
+        
+    }
+    @media (min-width: 721px) and  (max-width: 1158px) {
+        max-width: 1024px;
+    }
+    @media (min-width: 1400px) {
+        max-width: 1280px;
+    }
+}

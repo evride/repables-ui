@@ -1,42 +1,40 @@
-import React, {useState} from "react";
+import React from 'react';
 
+export default function Registration() {
+  const submitForm = (evt) => {
+    const payload = {};
+    Array.from(evt.target).forEach((input) => {
+      if (input.name) {
+        payload[input.name] = input.value;
+      }
+    });
 
+    evt.preventDefault();
 
-export default function Registration  (){
-    const [ username, setUsername ] = useState('')
-    const [ email, setEmail ] = useState('')
+    fetch('https://api.repables.com/user', { // the url address is subject to change
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((resp) => resp.json())
+      .then((data) => console.log(data));
+  };
 
-    const submitForm = (evt) => { 
-         const payload = new FormData()
-         Array.from(evt.target).forEach((input) => {
-               if (input.name) {
-                   payload.append(input.name, input.value);
-               }
-         });
-
-         evt.preventDefault();
-        
-        fetch("/api/user/register", {
-            method: "POST",
-            body: payload
-        })
-        .then(resp => resp.json())
-        .then(data => console.log(data))
-    };
-
-    return(
-        <div className="registration">
-            <form onSubmit={submitForm}>
-                <label>New User Registration Form</label>
-                <br></br>
-                <label>Username: </label>
-                <input placeholder="Username..." value={username} name="username" required onChange={(e) => setUsername(e.target.value)}/>
-                <label>Email: </label>
-                <input placeholder="Email..." value={email} name="email" onChange={(e) => setEmail(e.target.value)}/>
-                <label>Password: </label>
-                <input placeholder="Password..."  name="password" required /> 
-                <input type="submit" value="Submit"/>
-            </form>
-        </div>
-    )
+  return (
+    <div className="registration">
+      <form onSubmit={submitForm}>
+        <label>New User Registration Form</label>
+        <br />
+        <label htmlFor="username">Username: </label>
+        <input id="username" placeholder="Username..." name="username" required />
+        <label htmlFor="email">Email: </label>
+        <input id="email" placeholder="Email..." name="email" />
+        <label>Password: </label>
+        <input placeholder="Password..." name="password" required />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  );
 }
