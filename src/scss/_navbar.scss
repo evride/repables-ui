@@ -1,0 +1,26 @@
+.navbar {
+    display: flex;
+    height: 60px;
+    background: #333;
+    align-items: stretch;
+//    justify-content: stretch;
+    h1 { 
+        margin: 0;
+        margin-right: 20px;
+        color: #eee;
+    }
+    a { 
+	color: #ccc;
+        padding: 0px 6px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        &:hover {
+             background-color: #222;
+        }
+    }
+    section.user-links{ 
+         margin-left: auto;
+    }
+}

@@ -1,16 +1,20 @@
-
 import './App.css';
-import { useState, useEffect } from 'react';
-import Registration from './user-components/Registration';
-import Login from './user-components/Login';
+import React from 'react';
+import Header from './page-components/Header';
+import Explore from './page-components/Explore';
+
+import './scss/main.scss';
 
 function App() {
+  
+
   return (
     <div className="app">
-      <header className="app-header">
-	<Registration/>
-        <Login/>
-      </header>
+      <Header />
+      <main>
+        <Explore />
+
+      </main>
     </div>
   );
 }
