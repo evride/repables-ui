@@ -1,30 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import './ItemUploadForm.scoped.scss';
 import UploadsTable from './UploadsTable';
 import { selectToken } from '../store/auth/selectors';
-// import axios from 'Axios';
+import { selectFiles } from '../store/uploads/selectors';
+import DragAndDrop from '../components/DragAndDrop';
+import * as UploadTypes from '../store/uploads/types';
+
 
 export default function ItemUploadForm() {
   const [files, setFiles] = useState([]);
   const [itemRevId, setItemRevId] = useState();
-  const token = useSelector(selectToken)
-
-  function handleChange(evt) {
+  const token = useSelector(selectToken);
+  const activeRequest = useRef(null);
+  const fileList = useSelector(selectFiles);
+  const dispatch = useDispatch()
+  
+  const handleNewFiles = (addedFiles) => {
     const newFiles = [...files];
-    for (let i = 0; i < evt.target.files.length; i++) {
+
+    for (let i = 0; i < addedFiles.length; i++) {
       const fileObj = {};
-      fileObj.fileRef = evt.target.files[i];
-      fileObj.fileName = evt.target.files[i].name;
-      fileObj.fileSize = evt.target.files[i].size;
-      fileObj.fileType = evt.target.files[i].type;
+      fileObj.id = new Date().getTime() + '' + Math.floor(Math.random() * 10000)
+      fileObj.fileRef = addedFiles[i];
+      fileObj.fileName = addedFiles[i].name;
+      fileObj.fileSize = addedFiles[i].size;
+      fileObj.fileType = addedFiles[i].type;
+      fileObj.bytesLoaded = 0;
       fileObj.completed = false;
       newFiles.push(fileObj);
     }
 
     setFiles(newFiles);
+  };
+
+  const handleFileInputChange = (evt) => {
     evt.preventDefault();
+    handleNewFiles(evt.target.files);
+  };
+
+  const handleFileDel = (file) => {
+    const updatedFiles = files.filter(f => f.id !== file.id)   
+    setFiles(updatedFiles)
   }
+
+  useEffect(() =>{
+    if(fileList.length > 0){
+
+      handleNewFiles(fileList);
+      dispatch({ type: UploadTypes.CLEAR_FILE_LIST });
+    }
+  }, [fileList]);
 
   
   useEffect(() => {
@@ -61,30 +88,52 @@ export default function ItemUploadForm() {
     };
     
     const uploadFile = (file) => {
+        console.log('upload file function')
         const payload = new FormData();
         payload.append('file', file.fileRef);
+          
         
-        fetch(`https://api.repables.com/file/${itemRevId}`, {
-            method: 'POST',
-            headers: {
-                // 'Sec-Fetch-Site' : 'cross-site',
-                // 'Sec-Fetch-Mode' : 'cors',
-                // "Content-Type": "multipart/form-data",
-                // 'Accept': 'application/json',
-                
-                Authorization: `Bearer ${token}`,
+          const config = {
+            onUploadProgress: (progressEvent) => {
+              file.bytesLoaded = Math.min(progressEvent.loaded, file.fileSize)
+              setFiles([...files])
+              const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+              console.log(percentCompleted)
+              
             },
-            body: payload,
-        })
-        .then((resp) => resp.json())
-        .then(() => {
-            file.completed = true;
-            const newFiles = [...files];
-            setFiles(newFiles);
-        });
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }
+        
+          
+        
+        if(!activeRequest.current){
+          const req = axios.post(`https://api.repables.com/file/${itemRevId}`, payload, config);
+          activeRequest.current = req;
+          req.then(() => {
+              file.completed = true;
+              activeRequest.current = null;
+              const newFiles = [...files];
+              setFiles(newFiles);
+          });
+        }
+       
     };
 
+    // useEffect(()=> {
+    //   const callback = () => {
+          
+
+    //   }
+    //   document.addEventListener('click', callback);
+    //   return () =>{
+    //       document.removeEventListener('click', callback)
+    //   }
+    // }, []);
+
     useEffect(() => {
+      console.log('use effect')
       const notCompleted = files.filter(file => !file.completed)
       if (notCompleted.length >= 1) {
           uploadFile(notCompleted[0])
@@ -93,12 +142,13 @@ export default function ItemUploadForm() {
     }, [files]);
     
     return (
-        <div className="item-upload-form">
-      <form onSubmit={handleFormSubmit}>
+      <div className="item-upload-container">
+          <UploadsTable files={files} handleFileDel={handleFileDel}/>
+          <DragAndDrop />
+      <form className="item-upload-form" onSubmit={handleFormSubmit}>
         <div className="form-row">
           <label htmlFor="file">Files</label>
-          <input id="file" type="file" multiple name="file" onChange={handleChange} />
-      <UploadsTable files={files} />
+          <input type="file" multiple name="file"  onChange={handleFileInputChange}/>
         </div>
         <div className="form-row">
           <label htmlFor="name">Item Name</label>
@@ -114,7 +164,7 @@ export default function ItemUploadForm() {
         </div>
         <div className="form-row">
           <label htmlFor="license">License</label>
-          <select>
+          <select id="license" name="license">
             <option>cc, Attribution - Creative Commons</option>
             <option>cc-sa, Attribution - Share Alike - Creative Commons</option>
             <option>cc-nd, Attribution - No Derivatives - Creative Commons</option>
@@ -133,7 +183,7 @@ export default function ItemUploadForm() {
           <label htmlFor="version">Version</label>
           <input id="version" type="text" name="version" placeholder="version" defaultValue="1.0" />
         </div>
-        <button type="submit">Upload</button>
+        <button type="submit">Publish</button>
       </form>
     </div>
   );

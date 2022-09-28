@@ -1,0 +1,5 @@
+export const SET_DROP_DEPTH = 'SET_DROP_DEPTH';
+export const SET_IN_DROP_ZONE = 'SET_IN_DROP_ZONE';
+export const ADD_FILE_TO_LIST = 'ADD_FILE_TO_LIST';
+export const CLEAR_FILE_LIST = 'CLEAR_FILE_LIST';
+export const DELETE_FILE_FROM_LIST = 'DELETE_FILE_FROM_LIST';
