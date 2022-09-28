@@ -1,6 +1,41 @@
-div { 
+div.form-row { 
+
+    margin: 8px 0px;
 
     label {
+        margin: 0px 0px 4px 0px;
+        display: block;
         color: #eee;
+
     }
+
+    input, textarea, select {
+        display: block;
+        width: 100%;
+        max-width: 640px;
+        padding: 5px;
+        box-sizing: border-box;
+
+    }
+
+    
+
+    #version, #license{
+        width: 50%;
+        max-width: 320px;
+    }
+
+
+
 }
+
+form.item-upload-form {
+    button{
+        padding: 8px 16px;
+        background-color: beige;
+        border-radius: 4px;
+        border-style: solid;
+    }
+
+}
+

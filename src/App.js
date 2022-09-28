@@ -7,16 +7,18 @@ import './scss/main.scss';
 
 function App() {
   
+  
 
   return (
     <div className="app">
       <Header />
       <main>
         <Explore />
-
       </main>
     </div>
   );
 }
 
 export default App;
+
+console.log("pickle")

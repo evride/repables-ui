@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
 
 import * as AuthTypes from '../store/auth/types';
 
@@ -39,6 +39,7 @@ export default function Login(store) {
         <label>Password</label>
         <input placeholder="Password..." name="password" required />
         <input type="submit" value="Login" />
+        <a href="/reset-password">Forgot your password?</a>
       </form>
     </div>
   );

@@ -13,8 +13,9 @@ export default function NavBar() {
 
 
   const options = [
-    { label : "Profile", value: "/profile"},
+    { label : "Profile", value: "/profile"}, 
     { label : "Edit Profile", value: "/edit-profile"},
+    { label : "Uploaded Items", value: "/uploaded-items"},
     { label : 'Logout', value: '/logout'}
   ];
 
@@ -29,7 +30,6 @@ export default function NavBar() {
         <Link to="/create">Create</Link>
       </nav>
       <section className="user-links">
-
         { !isLoggedIn
                   && (
                   <>

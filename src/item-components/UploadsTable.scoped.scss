@@ -1,0 +1,21 @@
+table.uploads-table {
+    width: 100%;
+    max-width: 640px;
+    color: #fff;
+    background-color: #235;
+
+    td, th {
+        padding: 2px;
+        background-color: #333;
+    }
+
+    th:nth-child(1){
+        text-align: left;
+    }
+
+    tr:nth-child(2n + 1) td{
+        background-color: #444;
+
+    }
+
+}
