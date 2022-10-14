@@ -8,27 +8,32 @@ import { selectToken } from '../store/auth/selectors';
 export default function ItemUploadForm() {
   const [files, setFiles] = useState([]);
   const [itemRevId, setItemRevId] = useState();
+  const [currUpload, setCurrUpload] = useState();
+  const [uploadStatusChange, setUploadStatusChange] = useState(0);
   const token = useSelector(selectToken)
 
   function handleChange(evt) {
     const newFiles = [...files];
     for (let i = 0; i < evt.target.files.length; i++) {
+      console.log(evt.target.files[i]);
       const fileObj = {};
       fileObj.fileRef = evt.target.files[i];
       fileObj.fileName = evt.target.files[i].name;
       fileObj.fileSize = evt.target.files[i].size;
       fileObj.fileType = evt.target.files[i].type;
+      fileObj.bytesLoaded = 0;
+      fileObj.id = `${fileObj.fileName},${fileObj.fileSize},${new Date().getTime()}`;
       fileObj.completed = false;
       newFiles.push(fileObj);
     }
-
+    console.log(newFiles);
     setFiles(newFiles);
     evt.preventDefault();
   }
 
   
   useEffect(() => {
-      fetch('https://api.repables.com/item', {
+      fetch('https://api.repables.com/item-revision', {
           method: 'POST',
           headers: {
               Authorization: `Bearer ${token}`,
@@ -59,62 +64,64 @@ export default function ItemUploadForm() {
             body: JSON.stringify(payload),
         });
     };
+ 
+
+    useEffect(() => {
+      const notCompleted = files.filter((file) => !file.completed);      
+      if (notCompleted.length >= 1 && !currUpload) {
+        setCurrUpload(notCompleted[0]);
+      }
+     
+    }, [files, currUpload]);
     
-    const uploadFile = (file) => {
+    useEffect(() => {
+      if (currUpload) {
+        
+        const file = currUpload;
         const payload = new FormData();
         payload.append('file', file.fileRef);
         
-        fetch(`https://api.repables.com/file/${itemRevId}`, {
-            method: 'POST',
-            headers: {
-                // 'Sec-Fetch-Site' : 'cross-site',
-                // 'Sec-Fetch-Mode' : 'cors',
-                // "Content-Type": "multipart/form-data",
-                // 'Accept': 'application/json',
-                
-                Authorization: `Bearer ${token}`,
-            },
-            body: payload,
-        })
-        .then((resp) => resp.json())
-        .then(() => {
-            file.completed = true;
-            const newFiles = [...files];
-            setFiles(newFiles);
+        const req = new XMLHttpRequest();
+        req.addEventListener('load', () => {
+          file.completed = true;
+          setCurrUpload(undefined);
         });
-    };
-
-    useEffect(() => {
-      const notCompleted = files.filter(file => !file.completed)
-      if (notCompleted.length >= 1) {
-          uploadFile(notCompleted[0])
+        req.upload.addEventListener('progress', (evt) => {
+          console.log('progress', evt.loaded, evt.total)
+          file.bytesLoaded = evt.loaded;
+          setUploadStatusChange((new Date()).getTime());
+        });
+        req.fileId = file.id;
+        req.open("POST", `https://api.repables.com/file/${itemRevId}`);
+        req.setRequestHeader('Authorization', `Bearer ${token}`);
+        req.send(payload);
       }
-     
-    }, [files]);
-    
+    }, [currUpload]);
+
+
     return (
         <div className="item-upload-form">
       <form onSubmit={handleFormSubmit}>
         <div className="form-row">
-          <label htmlFor="file">Files</label>
-          <input id="file" type="file" multiple name="file" onChange={handleChange} />
-      <UploadsTable files={files} />
+          <label htmlFor="file">Add Files</label>
+          <input  id="file" type="file" multiple name="file" onChange={handleChange} />
+        </div>
+        <UploadsTable files={files} />
+        <div className="form-row">
+          <label htmlFor="name">Item Name:</label>
+          <input  id="name" type="text" name="name" placeholder="name" />
         </div>
         <div className="form-row">
-          <label htmlFor="name">Item Name</label>
-          <input id="name" type="text" name="name" placeholder="name" />
-        </div>
-        <div className="form-row">
-          <label htmlFor="description">Item Description</label>
+          <label htmlFor="description">Item Description:</label>
           <textarea id="description" type="text" name="description" placeholder="description" />
         </div>
         <div className="form-row">
-          <label htmlFor="instructions">Instructions</label>
+          <label htmlFor="instructions">Instructions:</label>
           <textarea id="instructions" type="text" name="instructions" placeholder="instructions" />
         </div>
         <div className="form-row">
-          <label htmlFor="license">License</label>
-          <select>
+          <label  htmlFor="license">License</label>
+          <select id="license">
             <option>cc, Attribution - Creative Commons</option>
             <option>cc-sa, Attribution - Share Alike - Creative Commons</option>
             <option>cc-nd, Attribution - No Derivatives - Creative Commons</option>
@@ -133,7 +140,7 @@ export default function ItemUploadForm() {
           <label htmlFor="version">Version</label>
           <input id="version" type="text" name="version" placeholder="version" defaultValue="1.0" />
         </div>
-        <button type="submit">Upload</button>
+        <button className="upload-form-btn" type="submit">Upload</button>
       </form>
     </div>
   );
