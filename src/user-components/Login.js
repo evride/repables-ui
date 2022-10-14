@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import * as AuthTypes from '../store/auth/types';
 
@@ -11,7 +11,7 @@ export default function Login(store) {
     evt.preventDefault();
     const payload = {};
     Array.from(evt.target).forEach((input) => {
-      if (input.name) {
+      if (input.name)   {
         payload[input.name] = input.value;
       }
     });
