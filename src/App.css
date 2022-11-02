@@ -90,7 +90,7 @@ input[type="file"] {
   cursor: pointer;
 }
 
-form {
+.create-form-design {
   border-radius: 10px;
   background: #282c34;
   padding: 2em;
@@ -103,6 +103,43 @@ form {
 
 
 
-/* instructions */
-/* descrption */
-/* file */
+.login-form-design,
+.registration-form-design {
+  display: flex;
+  flex-direction: column;
+  background: #282c34;
+  padding: 20px;
+  align-items: flex-start;
+  font-size: 20px;
+
+}
+
+.login-label,
+.registration-label {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 2em;
+  color: black;
+}
+
+.login-design,
+.registration-design {
+  margin-bottom: 20px;
+  line-height: 20px;
+  width: 500px;
+}
+
+.login-creds-design,
+.registration-creds-design {
+  margin-bottom: 5px;
+}
+
+.login-btn,
+.registration-btn {
+  background-color: #fff;
+  padding: 4px 8px;
+  color: #282c34;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}

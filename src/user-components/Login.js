@@ -31,14 +31,16 @@ export default function Login(store) {
 
   return (
     <div>
-      <form onSubmit={submitForm}>
-        <label>User Login</label>
+      <form onSubmit={submitForm} className="login-form">
+        <label className="login-label">User Login</label>
         <br />
-        <label>Username</label>
-        <input placeholder="Username..." name="username_or_email" required />
-        <label>Password</label>
-        <input placeholder="Password..." name="password" required />
-        <input type="submit" value="Login" />
+          <div className="login-form-design">
+            <label htmlFor='username' className="login-creds-design">Username</label>
+            <input id="username" className="login-design" placeholder="Username..." name="username_or_email" required />
+            <label htmlFor="password" className="login-creds-design">Password</label>
+            <input id="password" className="login-design" placeholder="Password..." name="password" required />
+            <input class="login-btn" type="submit" value="Login" />
+          </div>
       </form>
     </div>
   );
