@@ -101,7 +101,7 @@ export default function ItemUploadForm() {
 
     return (
         <div className="item-upload-form">
-      <form onSubmit={handleFormSubmit}>
+      <form className="create-form-design" onSubmit={handleFormSubmit}>
         <div className="form-row">
           <label htmlFor="file">Add Files</label>
           <input  id="file" type="file" multiple name="file" onChange={handleChange} />

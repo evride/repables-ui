@@ -25,15 +25,17 @@ export default function Registration() {
   return (
     <div className="registration">
       <form onSubmit={submitForm}>
-        <label>New User Registration Form</label>
+        <label className="registration-label">New User Registration Form</label>
         <br />
-        <label htmlFor="username">Username: </label>
-        <input id="username" placeholder="Username..." name="username" required />
-        <label htmlFor="email">Email: </label>
-        <input id="email" placeholder="Email..." name="email" />
-        <label>Password: </label>
-        <input placeholder="Password..." name="password" required />
-        <input type="submit" value="Submit" />
+          <div className="registration-form-design">
+            <label htmlFor="username" className="registration-creds-design">Username: </label>
+            <input id="username" className="registration-design" placeholder="Username..." name="username" required />
+            <label htmlFor="email" className="registration-creds-design">Email: </label>
+            <input id="email" className="registration-design" placeholder="Email..." name="email" />
+            <label className="registration-creds-design" htmlFor="password">Password: </label>
+            <input className="registration-design" id="password" placeholder="Password..." name="password" required />
+            <input class="registration-btn" type="submit" value="Submit" />
+          </div>
       </form>
     </div>
   );

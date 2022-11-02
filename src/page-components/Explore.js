@@ -7,8 +7,9 @@ import ItemPage from '../item-components/ItemPage';
 import User from '../user-components/User';
 import Logout from '../user-components/Logout';
 import EditProfile from '../user-components/EditProfile';
+import ItemViewPage from '../item-components/ItemViewPage'
 
-export default function Body() {
+function Explore() {
   return (
     <div>
 
@@ -20,8 +21,10 @@ export default function Body() {
         <Route path="/user" element={<User />} />
         <Route path='/edit-profile' element={<EditProfile/>}/>
         <Route path='/logout' element={<Logout/>} />
-
+        <Route path='/r/:itemId' element={<ItemViewPage/>} />
       </Routes>
     </div>
   );
 }
+
+export default Explore
