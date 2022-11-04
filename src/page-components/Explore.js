@@ -1,30 +1,36 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import HomePage from './HomePage';
-import Login from '../user-components/Login';
-import Registration from '../user-components/Registration';
-import ItemPage from '../item-components/ItemPage';
-import User from '../user-components/User';
-import Logout from '../user-components/Logout';
-import EditProfile from '../user-components/EditProfile';
-import ItemViewPage from '../item-components/ItemViewPage'
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectToken } from '../store/auth/selectors';
 
-function Explore() {
+export default function Explore() {
+
+    const [items, setItems] = useState([])
+    const token = useSelector(selectToken)
+
+    useEffect(() => {
+        fetch(`https://api.repables.com/items`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+          })
+          .then((resp) => resp.json())
+          .then((data) => {
+              setItems(data);
+          });
+      }, []);
+
+const mappedItems = items.map(item => { 
+    return ( <div key={item.id}> <Link to ={"/r/" + item.id}> {item.id}
+        <div><h4>{item.user.username}</h4> <h1>{item.name}</h1></div>
+    </Link> </div>
+    );
+})
+
   return (
     <div>
-
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/create" element={<ItemPage />} />
-        <Route path="/user" element={<User />} />
-        <Route path='/edit-profile' element={<EditProfile/>}/>
-        <Route path='/logout' element={<Logout/>} />
-        <Route path='/r/:itemId' element={<ItemViewPage/>} />
-      </Routes>
+        {mappedItems}
     </div>
   );
 }
-
-export default Explore
