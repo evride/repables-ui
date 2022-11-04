@@ -43,6 +43,12 @@
       ],
       "no-console":[
         "off"
+      ],
+      "arrow-body-style": [
+         "off"
+      ],
+      "prefer-template": [
+         "off"
       ]
 
    }
