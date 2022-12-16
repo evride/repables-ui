@@ -6,7 +6,6 @@ import AppRoutes from './page-components/AppRoutes';
 import './scss/main.scss';
 
 function App() {
-  
 
   return (
     <div className="app">
