@@ -9,6 +9,7 @@ import Logout from '../user-components/Logout';
 import EditProfile from '../user-components/EditProfile';
 import ItemViewPage from '../item-components/ItemViewPage'
 import Explore from './Explore'
+import Search from './Search'
 
 function AppRoutes() {
   return (
@@ -24,6 +25,7 @@ function AppRoutes() {
         <Route path='/logout' element={<Logout/>} />
         <Route path='/r/:itemId' element={<ItemViewPage/>} />
         <Route path='/explore' element={<Explore />} />
+        <Route path='/search' element={<Search />} />
       </Routes>
     </div>
   );

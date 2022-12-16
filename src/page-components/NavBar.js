@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '../store/auth/selectors';
 import { selectUsername } from '../store/user/selectors';
@@ -9,7 +9,8 @@ import Dropdown from '../components/Dropdown';
 export default function NavBar() {
   const isLoggedIn = useSelector(selectIsAuthenticated);
   const userName = useSelector(selectUsername);
-  
+  const navigate = useNavigate();
+
 
 
   const options = [
@@ -18,7 +19,14 @@ export default function NavBar() {
     { label : 'Logout', value: '/logout'}
   ];
 
- 
+ function handleSubmit(event) {
+  // console.log(event.target.search.value)
+    event.preventDefault();
+    const searchVariable = event.target.search.value
+    navigate("/search?q=" + searchVariable)
+  // const searchValue = event.target.value
+  console.log(event.target.value)
+ }
 
 
   return (
@@ -27,6 +35,9 @@ export default function NavBar() {
       <nav>
         <Link to="/explore">Explore</Link>
         <Link to="/create">Create</Link>
+      <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="search" name="search"/> 
+      </form>
       </nav>
       <section className="user-links">
 
@@ -41,7 +52,7 @@ export default function NavBar() {
         {isLoggedIn
           ? (
               <Dropdown options={options} >
-                <a>{userName}</a>
+                <Link to={'/u/' + userName}>{userName}</Link>
               </Dropdown>
             
           )
