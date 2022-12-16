@@ -23,7 +23,7 @@ export default function NavBar() {
   // console.log(event.target.search.value)
     event.preventDefault();
     const searchVariable = event.target.search.value
-    navigate("/search?q=" + searchVariable)
+    navigate("/search?q=" + encodeURIComponent(searchVariable).replace( '%20', '+'))
   // const searchValue = event.target.value
   console.log(event.target.value)
  }
