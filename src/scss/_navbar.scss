@@ -23,4 +23,15 @@
     section.user-links{ 
          margin-left: auto;
     }
+    .input-search {
+       margin-left: 10px;
+       display: inline-flex;
+       font-size: 20px;
+    }
 }
+
+.search-button {
+    margin-left: 10px;
+    padding: 3px 7px;
+    cursor: pointer;
+  }
