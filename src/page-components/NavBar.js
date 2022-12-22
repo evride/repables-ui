@@ -23,7 +23,9 @@ export default function NavBar() {
       <nav>
         <Link to="/explore">Explore</Link>
         <Link to="/create">Create</Link>
-       <SearchInput />
+        <div className="input-search">  
+          <SearchInput />
+        </div>
       </nav>
       <section className="user-links">
 

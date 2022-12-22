@@ -19,18 +19,20 @@ export default function SearchInput() {
         setSearchState(event.target.value)
     }
       
-       useEffect(() => {
-          inputRef.current.value = q;
-          inputRef.current.focus();
-          setSearchState(q)
-       },[])
-      
+    useEffect(() => {
+        inputRef.current.value = q;
+        inputRef.current.focus();
+        setSearchState(q)
+    },[])
+    
+    console.log(searchState.length)
     
     return (
         <form onSubmit={handleSubmit}>
-                <input ref={inputRef} type="text" placeholder="search" name="search" onChange={handleChange}/> 
+                <input className = "search-input" ref={inputRef} type="text" placeholder="search" 
+                name="search" onChange={handleChange}/> 
                 { searchState.length >= 1 ? 
-                (<button>Search!</button>) :
+                (<button className="search-button" type="submit">Search!</button>) : 
                 null}
         </form>
 
