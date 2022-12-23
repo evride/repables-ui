@@ -22,7 +22,7 @@ export default function SearchInput() {
     useEffect(() => {
         inputRef.current.value = q;
         inputRef.current.focus();
-        setSearchState(q)
+        setSearchState(q ?? "")
     },[])
     
     console.log(searchState.length)
