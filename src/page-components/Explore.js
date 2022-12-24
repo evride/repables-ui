@@ -24,10 +24,12 @@ export default function Explore() {
 const mappedItems = items.map(item => { 
     return ( 
     <div key={item.id}> 
-        <Link to ={"/r/" + item.id}> {item.id}
+        <Link to ={"/r/" + item.id} className="item-card">
             <div>
-                <h4>{item.user.username}</h4> 
+                <img src={`https://dev.repables.com/${item.previewImage.large.url}`}
+                 alt={item.name}/>
                 <h1>{item.name}</h1>
+                <h4>{item.user.username}</h4> 
             </div>
         </Link> 
     </div>
@@ -35,7 +37,7 @@ const mappedItems = items.map(item => {
 })
 
   return (
-    <div>
+    <div className="item-container">
         {mappedItems}
     </div>
   );

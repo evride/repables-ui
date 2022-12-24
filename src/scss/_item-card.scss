@@ -1,0 +1,27 @@
+
+.item-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.item-card {
+    background-color: #333;
+    max-width: 300px;
+    overflow: hidden;
+    margin: 0px 10px 20px;
+    display: block;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.745);
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, .3);
+    
+    img {
+        max-width: 100%;
+        object-fit: cover;
+
+    }
+
+    h1,h4 {
+        margin-left: 5px;
+    }
+
+}
