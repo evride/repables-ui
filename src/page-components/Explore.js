@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+
 import { useSelector } from 'react-redux';
 import { selectToken } from '../store/auth/selectors';
+import ItemCard from '../item-components/ItemCard';
 
 export default function Explore() {
 
@@ -23,22 +24,25 @@ export default function Explore() {
 
 const mappedItems = items.map(item => { 
     return ( 
-    <div key={item.id}> 
-        <Link to ={"/r/" + item.id} className="item-card">
-            <div>
-                <img src={`https://dev.repables.com/${item.previewImage.large.url}`}
-                 alt={item.name}/>
-                <h1>{item.name}</h1>
-                <h4>{item.user.username}</h4> 
-            </div>
-        </Link> 
-    </div>
+        <ItemCard item={item} key={item.id}/>
+
+
+    // <div key={item.id}> 
+    //     <Link to ={"/r/" + item.id} className="item-card">
+    //         <div>
+    //             <img src={`https://dev.repables.com/${item.previewImage.large.url}`}
+    //              alt={item.name}/>
+    //             <h1>{item.name}</h1>
+    //             <h4>{item.user.username}</h4> 
+    //         </div>
+    //     </Link> 
+    // </div>
     );
 })
 
   return (
     <div className="item-container">
-        {mappedItems}
+     {mappedItems}
     </div>
   );
 }
