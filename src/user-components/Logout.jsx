@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import * as AuthTypes from '../store/auth/types';
 import { useNavigate } from 'react-router-dom';
+import * as AuthTypes from '../store/auth/types';
 
 export default function Logout() {
 
@@ -18,8 +18,7 @@ export default function Logout() {
   },[]);
 
   return (
-    <div>
-      
-    </div>
-  );
+    <>
+    </>
+  )
 }

@@ -1,6 +1,4 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectToken } from "../store/auth/selectors";
 
@@ -67,10 +65,10 @@ export default function EditProfile (){
                 </div>
                 <div className="form-row">
                     <label>Biography</label>
-                    <textarea id="biography" name="biography" defaultValue={profile.biography}></textarea>
+                    <textarea id="biography" name="biography" defaultValue={profile.biography}/>
                 </div>
                 <div className="form-row">
-                    <button>Save</button>
+                    <button type="submit">Save</button>
                 </div>
             </form>
         </div>

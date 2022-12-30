@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectIsAuthenticated } from '../store/auth/selectors';
-import { selectUsername } from '../store/user/selectors';
+import { selectIsAuthenticated, selectUsername } from '../store/auth/selectors';
 import Dropdown from '../components/Dropdown';
 import SearchInput from "../components/SearchInput"
 

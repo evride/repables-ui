@@ -39,7 +39,7 @@ export default function Login(store) {
             <input id="username" className="login-design" placeholder="Username..." name="username_or_email" required />
             <label htmlFor="password" className="login-creds-design">Password</label>
             <input id="password" className="login-design" placeholder="Password..." name="password" required />
-            <input class="login-btn" type="submit" value="Login" />
+            <input className="login-btn" type="submit" value="Login" />
           </div>
       </form>
     </div>
