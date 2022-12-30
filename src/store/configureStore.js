@@ -4,12 +4,12 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 import reducers from './reducers';
 
-const middleware = [];
+// const middleware = [];
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'user'],
+  whitelist: ['auth'],
   stateReconciler: autoMergeLevel2,
   debounce: 500,
 };

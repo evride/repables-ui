@@ -1,8 +1,10 @@
 import * as AuthTypes from './types';
 
 const initialState = {
+  id: -1,
   token: null,
   timestamp: 0,
+  username: '',
   loading: false,
   loaded: false,
 };
@@ -16,11 +18,14 @@ const authReducer = (state, action) => {
         loaded: false,
       };
     case AuthTypes.LOGIN_SUCCESS:
+      const {id, username, token} = action.payload
       return {
-        token: action.payload.token,
+        id, 
+        token,
         timestamp: new Date().getTime(),
+        username,
         loading: false,
-        loaded: true,
+        loaded: true
       };
     case AuthTypes.LOGOUT:
     case AuthTypes.LOGIN_ERROR:

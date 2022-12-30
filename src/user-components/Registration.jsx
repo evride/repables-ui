@@ -34,7 +34,7 @@ export default function Registration() {
             <input id="email" className="registration-design" placeholder="Email..." name="email" />
             <label className="registration-creds-design" htmlFor="password">Password: </label>
             <input className="registration-design" id="password" placeholder="Password..." name="password" required />
-            <input class="registration-btn" type="submit" value="Submit" />
+            <input className="registration-btn" type="submit" value="Submit" />
           </div>
       </form>
     </div>
