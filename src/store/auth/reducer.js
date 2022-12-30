@@ -7,7 +7,7 @@ const initialState = {
   loaded: false,
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state, action) => {
   switch (action.type) {
     case AuthTypes.LOGIN:
       return {
@@ -26,7 +26,10 @@ const authReducer = (state = initialState, action) => {
     case AuthTypes.LOGIN_ERROR:
       return initialState;
     default:
-      return state;
+      if(state){
+        return state;
+      }  
+      return initialState;
   }
 };
 

@@ -9,7 +9,7 @@ export default function ItemUploadForm() {
   const [files, setFiles] = useState([]);
   const [itemRevId, setItemRevId] = useState();
   const [currUpload, setCurrUpload] = useState();
-  const [uploadStatusChange, setUploadStatusChange] = useState(0);
+  const [, setUploadStatusChange] = useState(0);
   const token = useSelector(selectToken)
 
   function handleChange(evt) {
