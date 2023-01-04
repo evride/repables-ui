@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 
 function ItemCard({item}) {
     return (
-     <div> 
         <Link to ={"/r/" + item.id} className="item-card">
             <div>
                 <img src={`https://dev.repables.com/${item.previewImage.large.url}`}
@@ -13,7 +12,6 @@ function ItemCard({item}) {
                 <h4>{item.user.username}</h4> 
             </div>
         </Link> 
-    </div>
     )
 }
 

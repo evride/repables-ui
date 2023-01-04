@@ -8,7 +8,8 @@ import "./Dropdown.scoped.scss"
 
 
 export default function Dropdown({ options, children}){
-    
+    console.log(children)
+    console.log(typeof children)
     
     const [open, setOpen] = useState(false);
     const ref = useRef(null)
@@ -46,5 +47,8 @@ options: PropTypes.arrayOf(PropTypes.exact({
     label: PropTypes.string,
     value: PropTypes.string
 })).isRequired,
-children: PropTypes.arrayOf(PropTypes.element).isRequired
+children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]).isRequired
+// children: PropTypes.arrayOf(PropTypes.element).isRequired
+// children: PropTypes.element.isRequired 
+// Note: PropTypes.oneOfType is being used to broadly accept the children from NavBar.
 }
