@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-
 import { useSelector } from 'react-redux';
 import { selectToken } from '../store/auth/selectors';
 import ItemCard from '../item-components/ItemCard';
@@ -11,9 +10,15 @@ export default function Explore() {
     const [page, setPage] = useState(0)
     const [limit, setLimit] = useState(20)
 
-    function handleChange () {
+    function nextPage () {
       setPage(page + 1)
       console.log("pressed")
+    }
+
+    function previousPage() {
+      if(page >= 1){
+        setPage(page - 1)
+      } 
     }
 
     function limitChange(event) {
@@ -40,15 +45,23 @@ export default function Explore() {
 })
 
   return (
-    <div className="item-container">
-     <select onChange={limitChange}>
-        <option value="10" >10</option>
-        <option value="20" selected>20</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-     </select>
-     {mappedItems}
-     <button type="button" onClick={handleChange}>Next page</button>
+    <div className="items-page">
+        <div className="results-per-page-container">
+          <label htmlFor="ResultsPerPage">Results per page</label>
+            <select id="ResultsPerPage" className="select-limit" onChange={limitChange} defaultValue="20">
+              <option value="10" >10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+          </select>
+       </div>
+      <div className="item-container">
+          {mappedItems}
+      </div>
+        <div className="results-btn-container">
+          <button className="results-page-btn" type="button" onClick={previousPage}>Previous page</button>
+          <button className="results-page-btn" type="button" onClick={nextPage}>Next page</button>
+        </div>
     </div>
   );
 }

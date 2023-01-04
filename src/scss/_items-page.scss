@@ -1,0 +1,27 @@
+
+.results-per-page-container{
+    // background-color: #333;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: right;
+
+    .select-limit{
+        margin-left: 10px;
+        width: 80px;
+        
+    };
+
+    
+
+}
+
+.results-btn-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.results-page-btn{
+    padding: 5px 0;
+    width: 20%;
+    cursor: pointer;
+}
