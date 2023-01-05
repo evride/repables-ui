@@ -21,18 +21,5 @@ body {
 main {
     margin: 40px auto;
     width: 95%;
-    @media (max-width: 720px) {
-        max-width: 100%; 
-        
-    }
-    @media (min-width: 721px) and  (max-width: 1158px) {
-        max-width: 1024px;
-    }
-    @media (min-width: 1159px) and  (max-width: 1400px) {
-        max-width: 1280px;
-    }
-    
-    // @media (min-width: 1400px) {
-    //     max-width: 1280px;+
-    // }
+
 }
