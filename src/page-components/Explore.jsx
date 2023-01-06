@@ -7,8 +7,9 @@ export default function Explore() {
 
     const [items, setItems] = useState([])
     const token = useSelector(selectToken)
-    const [page, setPage] = useState(0)
+    const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(20)
+    
 
     function nextPage () {
       setPage(page + 1)
@@ -16,7 +17,7 @@ export default function Explore() {
     }
 
     function previousPage() {
-      if(page >= 1){
+      if(page > 1){
         setPage(page - 1)
       } 
     }
@@ -26,7 +27,7 @@ export default function Explore() {
     }
 
     useEffect(() => {
-        fetch(`https://api.repables.com/items?offset=${page * limit}&limit=${limit}`, {
+        fetch(`https://api.repables.com/items?offset=${(page -1) * limit}&limit=${limit}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -44,6 +45,20 @@ export default function Explore() {
     );
 })
 
+    const array = [
+      page - 4, page - 3, page - 2, page - 1, page, page + 1, page + 2, page + 3, page + 4
+    ]
+
+    const filteredArray = array.filter(num => {
+     return num >= 1
+    })
+
+
+    const mappedArray = filteredArray.map(num => {
+    return <button className={num === page ? "current-page" : ""} type="button">{num}</button>
+      } 
+    )
+
   return (
     <div className="items-page">
         <div className="results-per-page-container">
@@ -60,6 +75,9 @@ export default function Explore() {
       </div>
         <div className="results-btn-container">
           <button className="results-page-btn" type="button" onClick={previousPage}>Previous page</button>
+          <div>
+            {mappedArray}
+            </div>
           <button className="results-page-btn" type="button" onClick={nextPage}>Next page</button>
         </div>
     </div>
