@@ -24,6 +24,7 @@ function AppRoutes() {
         <Route path='/edit-profile' element={<EditProfile/>}/>
         <Route path='/logout' element={<Logout/>} />
         <Route path='/r/:itemId' element={<ItemViewPage/>} />
+        <Route path='/explore/:pageNum' element={<Explore />} />
         <Route path='/explore' element={<Explore />} />
         <Route path='/search' element={<Search />} />
       </Routes>
