@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
+import {useParams, useNavigate} from 'react-router-dom'
 import { selectToken } from '../store/auth/selectors';
 import ItemCard from '../item-components/ItemCard';
 
@@ -7,25 +8,34 @@ export default function Explore() {
 
     const [items, setItems] = useState([])
     const token = useSelector(selectToken)
-    const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(20)
-    
+    const [count, setCount] = useState()
+    const {pageNum} = useParams() 
+    const page = Number(pageNum ?? 1)  
+    const navigate = useNavigate()
+    console.log(pageNum)
 
-    function nextPage () {
-      setPage(page + 1)
-      console.log("pressed")
-    }
-
-    function previousPage() {
-      if(page > 1){
-        setPage(page - 1)
-      } 
-    }
 
     function limitChange(event) {
       setLimit(Number(event.target.value))
     }
 
+    function setPage(num){
+      navigate(`/explore/${num}`)
+    }
+
+    function nextPage () {
+      setPage(page + 1)
+       console.log("pressed")
+     }
+
+     function previousPage() {
+     if(page !== 1){
+      setPage(page -1)
+     }
+    }
+
+ 
     useEffect(() => {
         fetch(`https://api.repables.com/items?offset=${(page -1) * limit}&limit=${limit}`, {
             method: 'GET',
@@ -36,13 +46,16 @@ export default function Explore() {
           .then((resp) => resp.json())
           .then((data) => {
               setItems(data.results);
+              setCount(data.count)
           });
+          // window.scrollTo({top: 10, left: 0, behavior: 'smooth'})
       }, [page, limit]);
 
     const mappedItems = items.map(item => { 
         return ( 
          <ItemCard item={item} key={item.id}/>
     );
+    
 })
 
     const array = [
@@ -50,12 +63,12 @@ export default function Explore() {
     ]
 
     const filteredArray = array.filter(num => {
-     return num >= 1
+     return num >= 1 && num <= count / limit + 1 
     })
 
 
     const mappedArray = filteredArray.map(num => {
-    return <button className={num === page ? "current-page" : ""} type="button">{num}</button>
+    return <button onClick={() => setPage(num)} className={`paginated-numbers ${num === page ? "current-page" : ""}`} type="button" key={num}>{num}</button>
       } 
     )
 
@@ -74,11 +87,11 @@ export default function Explore() {
           {mappedItems}
       </div>
         <div className="results-btn-container">
-          <button className="results-page-btn" type="button" onClick={previousPage}>Previous page</button>
+          { page !== 1 && <button className="results-page-btn" type="button" onClick={previousPage}>Previous page</button>}
           <div>
             {mappedArray}
             </div>
-          <button className="results-page-btn" type="button" onClick={nextPage}>Next page</button>
+         { page < Math.floor(count / limit + 1) && <button className="results-page-btn" type="button" onClick={nextPage}>Next page</button>}
         </div>
     </div>
   );

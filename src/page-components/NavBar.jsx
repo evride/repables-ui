@@ -28,22 +28,18 @@ export default function NavBar() {
       </nav>
       <section className="user-links">
 
-        { !isLoggedIn
-                  && (
-                  <>
-                    <Link to="/login">Login</Link>
-                    <span>|</span>
-                    <Link to="/registration">Register</Link>
-                  </>
-                  )}
-        {isLoggedIn
+        {isLoggedIn 
           ? (
               <Dropdown options={options} >
                 <Link to={'/u/' + userName}>{userName}</Link>
               </Dropdown>
-            
-          )
-          : null}
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <span>|</span>
+              <Link to="/registration">Register</Link>
+            </>
+            )}
       </section>
     </div>
   );
