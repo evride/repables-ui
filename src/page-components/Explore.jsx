@@ -15,27 +15,34 @@ export default function Explore() {
     const navigate = useNavigate()
     console.log(pageNum)
 
-
-    function limitChange(event) {
-      setLimit(Number(event.target.value))
-    }
-
+    
     function setPage(num){
       navigate(`/explore/${num}`)
     }
-
+    
     function nextPage () {
       setPage(page + 1)
-       console.log("pressed")
-     }
+      console.log("pressed")
+    }
+    
+    function previousPage() {
+      if(page !== 1){
+        setPage(page -1)
+      }
+    }
+    
+    
+    function limitChange(event) {
+      const currentPage = page;
+      const currentLimit = limit;
+      const newLimit = event.target.value;
+      const newPage = Math.floor((currentPage - 1) * currentLimit / newLimit ) + 1
 
-     function previousPage() {
-     if(page !== 1){
-      setPage(page -1)
-     }
+      setLimit(Number(event.target.value))
+      setPage(newPage)
+
     }
 
- 
     useEffect(() => {
         fetch(`https://api.repables.com/items?offset=${(page -1) * limit}&limit=${limit}`, {
             method: 'GET',
