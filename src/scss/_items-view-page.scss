@@ -1,0 +1,39 @@
+
+.item-view-page-container{
+    max-width: 1280px;
+
+    .item-gallery-large-image {
+        display: flex;
+        width: 640px;
+        overflow: hidden;
+
+    .item-gallery-scroll{
+        display: flex;
+        transition: margin-left .75s ease-out;
+    }
+
+        .item-large-image {
+            margin: 10px;
+            // border-radius: 10px;
+            // border: 2px solid black;
+        }
+    
+    }
+
+
+    .item-gallery-thumbnail {
+    display: flex;
+    
+   
+
+    .item-thumbnail {
+        margin: 10px;
+        // border-radius: 10px;
+        // border: 2px solid black;
+        cursor: pointer;
+        
+    }
+    
+    }
+
+}
