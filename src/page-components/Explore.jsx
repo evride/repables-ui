@@ -38,7 +38,7 @@ export default function Explore() {
       const newLimit = event.target.value;
       const newPage = Math.floor((currentPage - 1) * currentLimit / newLimit ) + 1
 
-      setLimit(Number(event.target.value))
+      setLimit(Number(event.target.value));
       setPage(newPage)
 
     }

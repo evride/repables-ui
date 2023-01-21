@@ -7,6 +7,7 @@ import { selectToken } from '../store/auth/selectors';
 function ItemViewPage() {
 
 const [item, setItem] = useState("")
+const [imageIndex, setImageIndex] = useState(0)
 
 const {itemId} = useParams()
 const token = useSelector(selectToken)
@@ -23,9 +24,57 @@ useEffect(() => {
           setItem(data);
       });
   }, []);
+  
+  
+
+
+  function newSlide(i){
+    console.log(i)
+    setImageIndex(i) 
+
+  }
+
+  const styles = {
+    marginLeft: imageIndex * -640 + "px",
+
+  }
+
+  
+
+       const renderedGalleryImage = item.images && item.images.map(pic => {
+          return (
+              <div className="item-large-image" key={pic.small.url}>
+                   <img src={`https://dev.repables.com/${pic.large.url}`} alt="something" /> 
+              </div>
+
+          )
+          
+      })
+      
+
+
+  
+  
+  const renderedThumbNails = item.images && item.images.map((pic, i) => {
+    return (
+        <div onClick={() => newSlide(i)} role="button" className="item-thumbnail" key={pic.small.url}>
+           <img src={`https://dev.repables.com/${pic.small.url}`} alt="something" /> 
+        </div>
+       
+       )
+    })
 
     return (
-        <div>
+        <div className="item-view-page-container">
+            <div className="item-gallery-large-image">
+                <div className="item-gallery-scroll" style={styles} >
+                
+                    {renderedGalleryImage}
+                </div>
+            </div>
+            <div className="item-gallery-thumbnail">
+                {renderedThumbNails}
+            </div>
             <h1>{item.name}</h1>
             <h2>{item.description}</h2>
             <p>{item.instructions}</p>
